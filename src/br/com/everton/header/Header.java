@@ -118,7 +118,7 @@ public class Header {
 	public String getHash(String arquivo) {
 		String resultado = arquivo.substring(18, 20);
 		if(resultado.equals("03")) {
-			resultado = "03- SHA-256";
+			resultado = "03 - SHA-256";
 			return resultado;
 		}
 		if(resultado.equals("01")) {
@@ -164,6 +164,27 @@ public class Header {
 	        resultado = temp1.toString();
 	    }
 		return resultado.replace("00","");
+	}
+	
+	public String getHeader(String arquivo) throws IOException {
+		Header header = new Header();
+		StringBuilder temp = new StringBuilder();
+		temp.append("Tamanho do cabeçalho: " + header.getTamanhoDoHeader(arquivo) + "\n");
+		temp.append("Versao do protocolo: " + header.getVersaoProtocolo(arquivo) + "\n");
+		temp.append("Código de erro: " + header.getCodigoDeErro(arquivo) + "\n");
+		temp.append("Indicação de tratamento especial: " + header.getTratamentoEspecial(arquivo) + "\n");
+		temp.append("Reservado para uso futuro: " + header.getUsoFuturo(arquivo) + "\n");
+		temp.append("Algoritmo da chave assimétrica do destino: " + header.getChaveAssimetricaDestino(arquivo) + "\n");
+		temp.append("Algoritmo da chave simétrica: " + header.getAlgoritimoChaveSimetrica(arquivo) + "\n");
+		temp.append("Algoritmo da chave assimétrica local: " + header.getChaveAssimetricaLocal(arquivo) + "\n");
+		temp.append("Algoritmo de \"hash\": " + header.getHash(arquivo) + "\n");
+		temp.append("Certificado digital do destino: " + header.getAcCertificadoDestino(arquivo) + "\n");
+		temp.append("Série do certificado digital do destino: " + header.getNumeroDeSerieDoDestino(arquivo) + "\n");
+		temp.append("Certificado digital do destinatario: " + header.getAcCertificadoLocal(arquivo) + "\n");
+		temp.append("Série do certificado digital de origem: " + header.getNumeroDeSerieDoLocal(arquivo) + "\n");
+		String finalString = temp.toString();
+		return finalString;
+		
 	}
 
 }
